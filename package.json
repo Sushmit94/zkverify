@@ -1,0 +1,23 @@
+{
+  "name": "aura-marketplace",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Aura - The Privacy-Preserving AI Marketplace",
+  "workspaces": [
+    "blockchain",
+    "frontend",
+    "model-server"
+  ],
+  "scripts": {
+    "install:all": "npm install && cd blockchain && npm install && cd ../frontend && npm install && cd ../model-server && npm install",
+    "dev:frontend": "cd frontend && npm run dev",
+    "dev:model-server": "cd model-server && npm run dev",
+    "build:frontend": "cd frontend && npm run build",
+    "build:blockchain": "cd blockchain && forge build",
+    "test:blockchain": "cd blockchain && forge test"
+  },
+  "devDependencies": {
+    "prettier": "^3.2.0"
+  }
+}
+

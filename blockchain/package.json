@@ -1,0 +1,14 @@
+{
+  "name": "aura-blockchain",
+  "version": "1.0.0",
+  "description": "Smart contracts for Aura Marketplace",
+  "scripts": {
+    "build": "forge build",
+    "test": "forge test",
+    "deploy": "forge script scripts/Deploy.s.sol:DeployScript --rpc-url $RPC_URL --broadcast --verify"
+  },
+  "devDependencies": {
+    "@openzeppelin/contracts": "^5.0.0"
+  }
+}
+

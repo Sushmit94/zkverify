@@ -1,0 +1,14 @@
+# This is a placeholder for the prover configuration
+# In practice, you would provide actual values here
+
+[public_inputs]
+public_input_hash = "0x0000000000000000000000000000000000000000000000000000000000000000"
+nullifier = "0x0000000000000000000000000000000000000000000000000000000000000000"
+
+[private_inputs]
+input = [65536, 131072]  # [1.0, 2.0] in Q16.16 format
+layer1_weights = [[65536, 131072], [196608, 262144], [327680, 393216], [458752, 524288]]
+layer1_biases = [65536, 131072, 196608, 262144]
+layer2_weights = [[65536, 131072, 196608, 262144]]
+layer2_bias = 65536
+
