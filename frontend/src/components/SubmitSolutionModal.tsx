@@ -83,35 +83,37 @@ export function SubmitSolutionModal({ taskId, isOpen, onClose }: SubmitSolutionM
               { attestationId: attestation.attestationId },
               {
                 onSuccess: (finalAttestation) => {
-                setProgress(80);
-                setStep("releasing");
+                  setProgress(80);
+                  setStep("releasing");
 
-                // Step 4: Submit solution to contract
-                submitSolution(
-                  {
-                    taskId,
-                    attestationId: finalAttestation.attestationId,
-                    outputHash: proofResult.outputHash,
-                    nullifier: `0x${nullifier}`,
-                    merkleProof: finalAttestation.merkleProof,
-                  },
-                  {
-                    onSuccess: () => {
-                      setProgress(100);
-                      setStep("success");
+                  // Step 4: Submit solution to contract
+                  // FIXED: Callbacks go in the second argument, not in the params object
+                  submitSolution(
+                    {
+                      taskId,
+                      attestationId: finalAttestation.attestationId,
+                      outputHash: proofResult.outputHash,
+                      nullifier: `0x${nullifier}`,
+                      merkleProof: finalAttestation.merkleProof,
                     },
-                    onError: (err) => {
-                      setError(err.message);
-                      setStep("error");
-                    },
-                  }
-                );
-              },
-              onError: (err) => {
-                setError(err.message);
-                setStep("error");
-              },
-            });
+                    {
+                      onSuccess: () => {
+                        setProgress(100);
+                        setStep("success");
+                      },
+                      onError: (err: any) => {
+                        setError(err.message);
+                        setStep("error");
+                      },
+                    }
+                  );
+                },
+                onError: (err) => {
+                  setError(err.message);
+                  setStep("error");
+                },
+              }
+            );
           },
           onError: (err) => {
             setError(err.message);
@@ -216,4 +218,3 @@ export function SubmitSolutionModal({ taskId, isOpen, onClose }: SubmitSolutionM
     </Dialog>
   );
 }
-

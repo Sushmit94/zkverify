@@ -5,5 +5,5 @@ authors = ["Aura Marketplace"]
 compiler_version = ">=0.10.0"
 
 [dependencies]
-std = { git = "https://github.com/noir-lang/noir", tag = "v0.10.0", directory = "noir_stdlib" }
+
 

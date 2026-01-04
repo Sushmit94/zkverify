@@ -51,14 +51,14 @@ export function useTask(taskId: string | null) {
   return {
     task: data
       ? {
-          requester: data[0],
-          reward: data[1],
-          publicInputHash: data[2],
-          expectedOutputHash: data[3],
-          isActive: data[4],
-          isCompleted: data[5],
-          solver: data[6],
-          nullifier: data[7],
+          requester: data.requester,
+          reward: data.reward,
+          publicInputHash: data.publicInputHash,
+          expectedOutputHash: data.expectedOutputHash,
+          isActive: data.isActive,
+          isCompleted: data.isCompleted,
+          solver: data.solver,
+          nullifier: data.nullifier,
         }
       : null,
     isLoading,
@@ -120,6 +120,9 @@ export function useCreateTask() {
 /**
  * Hook to submit a solution
  */
+/**
+ * Hook to submit a solution
+ */
 export function useSubmitSolution() {
   const queryClient = useQueryClient();
   const { writeContract, data: hash, isPending, error } = useWriteContract();
@@ -127,7 +130,11 @@ export function useSubmitSolution() {
     hash,
   });
 
-  const submitSolution = async (params: SubmitSolutionParams) => {
+  // Add an 'options' parameter here
+  const submitSolution = async (
+    params: SubmitSolutionParams, 
+    options?: { onSuccess?: () => void; onError?: (err: any) => void }
+  ) => {
     const taskIdBytes = params.taskId as `0x${string}`;
     const attestationIdBytes = params.attestationId as `0x${string}`;
     const outputHashBytes = params.outputHash as `0x${string}`;
@@ -145,6 +152,14 @@ export function useSubmitSolution() {
         nullifierBytes,
         merkleProof,
       ],
+    }, {
+      // Pass the callbacks into writeContract so they actually fire
+      onSuccess: () => {
+        if (options?.onSuccess) options.onSuccess();
+      },
+      onError: (err) => {
+        if (options?.onError) options.onError(err);
+      }
     });
   };
 
@@ -156,7 +171,6 @@ export function useSubmitSolution() {
     error,
   };
 }
-
 /**
  * Hook to cancel a task
  */
